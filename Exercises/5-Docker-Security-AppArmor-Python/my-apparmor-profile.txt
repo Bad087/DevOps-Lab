@@ -1,0 +1,25 @@
+
+#include <tunables/global>
+
+/usr/local/bin/python {
+    # Allow the Python runtime and application files
+    /usr/local/bin/python rix,
+    /usr/local/lib/** r,
+    /usr/local/lib/** mr,
+    /app/** r,
+
+    # Allow Flask to listen on a TCP port
+    network inet stream,
+    capability net_bind_service,
+
+    # Deny access to sensitive files
+    deny /etc/** r,
+    deny /var/** rw,
+
+    # Deny execution from common binary directories
+    deny /bin/** x,
+    deny /usr/bin/** x,
+
+    # Deny administrative capability
+    deny capability sys_admin,
+}
