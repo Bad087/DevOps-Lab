@@ -1,0 +1,47 @@
+
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Starting Exercise 7 CI pipeline'
+                checkout scm
+            }
+        }
+
+        stage('Validate Exercise Files') {
+            steps {
+                sh '''
+                    test -f "Exercise 7 - Introduction to CI and Jenkins Installation/README.md"
+                    test -f "Exercise 7 - Introduction to CI and Jenkins Installation/Jenkinsfile"
+                    echo "Required Exercise 7 files found."
+                '''
+            }
+        }
+
+        stage('CI Verification') {
+            steps {
+                echo 'Continuous Integration validation completed.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: Exercise 7 CI pipeline completed.'
+        }
+
+        failure {
+            echo 'FAILURE: Check the Jenkins console output.'
+        }
+
+        always {
+            echo 'Exercise 7 pipeline execution finished.'
+        }
+    }
+}
