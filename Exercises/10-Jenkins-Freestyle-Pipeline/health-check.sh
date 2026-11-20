@@ -25,4 +25,6 @@ echo "===================================="
 echo "       HEALTH CHECK COMPLETED"
 echo "===================================="
 
+echo "Health check exit status: 0"
+
 exit 0

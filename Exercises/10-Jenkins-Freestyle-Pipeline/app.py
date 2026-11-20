@@ -9,7 +9,7 @@ def home():
         "application": "DevOps Health Monitor",
         "message": "Welcome to Flask",
         "status": "Running",
-        "version": "1.0"
+        "version": "2.0"
     })
 
 
