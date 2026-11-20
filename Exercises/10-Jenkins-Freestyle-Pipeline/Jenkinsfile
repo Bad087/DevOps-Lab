@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME = 'DevOps-Health-Monitor'
+        DEPLOY_DIR = "${JENKINS_HOME}/deployments/health-monitor"
+    }
+
+    stages {
+
+        stage('Build') {
+            steps {
+                echo 'Starting Build Stage'
+
+                sh '''
+                    python3 -m venv venv
+                    ./venv/bin/pip install --upgrade pip
+                    ./venv/bin/pip install -r requirements.txt
+
+                    echo "Application dependencies installed."
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Starting Test Stage'
+
+                sh '''
+                    ./venv/bin/python -m pytest -v
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Starting Deploy Stage'
+
+                sh '''
+                    mkdir -p "$DEPLOY_DIR"
+
+                    cp app.py "$DEPLOY_DIR/"
+                    cp requirements.txt "$DEPLOY_DIR/"
+
+                    echo "Deployment completed successfully."
+                    echo "Deployment location: $DEPLOY_DIR"
+
+                    ls -la "$DEPLOY_DIR"
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline execution failed!'
+        }
+
+        always {
+            echo 'Pipeline execution finished.'
+        }
+    }
+}
