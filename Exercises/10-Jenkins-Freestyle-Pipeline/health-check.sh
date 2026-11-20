@@ -24,6 +24,7 @@ echo ""
 echo "===================================="
 echo "       HEALTH CHECK COMPLETED"
 echo "===================================="
+echo "Health Check Updated Successfully - Version 1.1"
 
 echo "Health check exit status: 0"
 
