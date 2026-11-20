@@ -10,43 +10,49 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Starting Build Stage'
+                dir('Exercises/10-Jenkins-Freestyle-Pipeline') {
+                    echo 'Starting Build Stage'
 
-                sh '''
-                    python3 -m venv venv
-                    ./venv/bin/pip install --upgrade pip
-                    ./venv/bin/pip install -r requirements.txt
+                    sh '''
+                        python3 -m venv venv
+                        ./venv/bin/pip install --upgrade pip
+                        ./venv/bin/pip install -r requirements.txt
 
-                    echo "Application dependencies installed."
-                '''
+                        echo "Application dependencies installed."
+                    '''
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Starting Test Stage'
+                dir('Exercises/10-Jenkins-Freestyle-Pipeline') {
+                    echo 'Starting Test Stage'
 
-                sh '''
-                    ./venv/bin/python -m pytest -v
-                '''
+                    sh '''
+                        ./venv/bin/python -m pytest -v
+                    '''
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Starting Deploy Stage'
+                dir('Exercises/10-Jenkins-Freestyle-Pipeline') {
+                    echo 'Starting Deploy Stage'
 
-                sh '''
-                    mkdir -p "$DEPLOY_DIR"
+                    sh '''
+                        mkdir -p "$DEPLOY_DIR"
 
-                    cp app.py "$DEPLOY_DIR/"
-                    cp requirements.txt "$DEPLOY_DIR/"
+                        cp app.py "$DEPLOY_DIR/"
+                        cp requirements.txt "$DEPLOY_DIR/"
 
-                    echo "Deployment completed successfully."
-                    echo "Deployment location: $DEPLOY_DIR"
+                        echo "Deployment completed successfully."
+                        echo "Deployment location: $DEPLOY_DIR"
 
-                    ls -la "$DEPLOY_DIR"
-                '''
+                        ls -la "$DEPLOY_DIR"
+                    '''
+                }
             }
         }
     }
